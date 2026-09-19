@@ -1,0 +1,14 @@
+Q: How do I reset my password?
+A: Go to the login page, click "Forgot Password", enter your email, and follow the reset link sent to you.
+
+Q: What is the refund policy?
+A: We offer full refunds within 30 days of purchase. After 30 days, no refunds are available.
+
+Q: How do I contact support?
+A: Email support@company.com or call 1-800-SUPPORT. Response time is within 24 hours.
+
+Q: Can I change my subscription plan?
+A: Yes, you can upgrade or downgrade your plan at any time in Account Settings. Changes take effect immediately.
+
+Q: Where do I find my invoice?
+A: Invoices are available in Billing History under Account Settings. You can download PDFs from there.

@@ -1,0 +1,31 @@
+# Getting Started Guide
+
+Welcome to our platform. This manual covers the essential features.
+
+## Account Setup
+1. Create an account using your email and a strong password.
+2. Verify your email by clicking the link in the verification email.
+3. Set up two-factor authentication in Security Settings.
+
+## Password Requirements
+- Minimum 8 characters
+- At least one uppercase letter
+- At least one number
+- At least one special character
+
+## Troubleshooting Login Issues
+If you cannot log in:
+- Make sure caps lock is off.
+- Try resetting your password using the "Forgot Password" link.
+- Clear your browser cache and cookies.
+- Ensure you are using a supported browser: Chrome, Firefox, Safari, Edge.
+
+## Billing
+All payment methods are managed in the Billing section. You can:
+- Add a new credit card
+- Update existing payment methods
+- View past invoices
+- Change your billing cycle
+
+## Support Hours
+Monday to Friday, 9 AM to 6 PM (EST). Weekend support is limited.
