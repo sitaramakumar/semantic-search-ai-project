@@ -14,6 +14,23 @@ CHUNK_SIZE = 500
 CHUNK_OVERLAP = 100
 DOCS_DIR = "./my_documents"
 OUTPUT_FILE = "knowledge_base.json"
+MANIFEST_FILE = "manifest.json"
+DEFAULT_ALLOWED_ROLES = ["READ", "WRITE", "ADMIN"]  # fail-open: untagged docs stay public
+
+
+def load_manifest():
+    """
+    documentName -> allowed_roles, from my_documents/manifest.json. A document
+    with no entry defaults to fully public rather than being silently locked
+    out - same fail-open-on-no-ACL-record choice as DocumentAccessGuard in the
+    interview-poc-sharepoint / interview-poc-rust services, applied here for
+    the same reason: don't lock out content nobody has explicitly restricted.
+    """
+    manifest_path = os.path.join(DOCS_DIR, MANIFEST_FILE)
+    if not os.path.isfile(manifest_path):
+        return {}
+    with open(manifest_path, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
 
 def chunk_text(text, max_chars=CHUNK_SIZE, overlap=CHUNK_OVERLAP):
@@ -47,16 +64,19 @@ def ingest_documents():
     if not os.getenv("OPENAI_API_KEY"):
         raise ValueError("OPENAI_API_KEY not set. Check your .env file.")
 
+    manifest = load_manifest()
     knowledge_base = {}
 
     for filename in sorted(os.listdir(DOCS_DIR)):
-        if filename.startswith('.'):
+        if filename.startswith('.') or filename == MANIFEST_FILE:
             continue
         filepath = os.path.join(DOCS_DIR, filename)
         if not os.path.isfile(filepath):
             continue
 
-        print(f"Processing: {filename}")
+        allowed_roles = manifest.get(filename, {}).get("allowed_roles", DEFAULT_ALLOWED_ROLES)
+
+        print(f"Processing: {filename} (allowed_roles={allowed_roles})")
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             text = f.read()
 
@@ -66,7 +86,8 @@ def ingest_documents():
         knowledge_base[filename] = {
             "chunks": chunks,
             "embeddings": embeddings,
-            "num_chunks": len(chunks)
+            "num_chunks": len(chunks),
+            "allowed_roles": allowed_roles
         }
         print(f"  -> {len(chunks)} chunks embedded")
 

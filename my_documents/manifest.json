@@ -1,0 +1,11 @@
+{
+  "faq.txt": {
+    "allowed_roles": ["READ", "WRITE", "ADMIN"]
+  },
+  "manual.txt": {
+    "allowed_roles": ["READ", "WRITE", "ADMIN"]
+  },
+  "internal-ops-runbook.txt": {
+    "allowed_roles": ["ADMIN"]
+  }
+}

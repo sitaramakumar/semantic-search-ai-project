@@ -1,0 +1,18 @@
+# Internal Ops Runbook (ADMIN only)
+
+## Database Failover Procedure
+1. Confirm the primary is actually down via the /health endpoint, not just the alert.
+2. Promote the standby replica using `pg_ctl promote`.
+3. Update the connection string in the secrets manager; do not hardcode it anywhere.
+4. Notify the on-call channel before, not after, customers notice.
+
+## Credential Rotation
+- Rotate the database service account password quarterly.
+- Rotate the JWT signing secret only during a maintenance window, since every
+  outstanding token becomes invalid the moment the secret changes.
+- Never store a rotated secret in application.properties directly; use the
+  environment-variable override.
+
+## Incident Escalation
+Sev1 pages the on-call engineer and the eng lead simultaneously. Sev2 pages
+on-call only. Do not page finance or support for infra incidents.
